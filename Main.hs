@@ -32,7 +32,9 @@ main = do
 
     cache <- fmap lines $ readFile filename `catch` (\_ -> return "")
 
-    let handle ""   = list
+    let line = concat $ intersperse " " rest
+
+        handle ""   = list
         handle line = add
 
         list = putStr (unlines cache)
@@ -42,6 +44,6 @@ main = do
             force newCache
             writeFile filename (unlines newCache)
 
-    handle $ concat $ intersperse " " rest
+    handle line
   where
 
