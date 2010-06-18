@@ -1,33 +1,33 @@
 NAME
        linecache is a simple utitlity to manage LRU cache of lines.
 
+
 SYNOPSYS
        linecache [-f cache-file-name] [-n cache-capacity] [-c] [-s] [new-line]
+
 
 DESCRIPTION
        linecache  manages  LRU  file  caches  of lines. It can add new line to
        specified cache, show existent cache lines and clean some cache.
 
-       --filename=cache-file-name
 
+OPTIONS
+       --filename=cache-file-name
        -f cache-file-name
               This is a path of the cache file. It means all operations  would
               be produced in this file. Default cache file is $HOME/.linecache
 
        --number=cache-capacity
-
        -n cache-capacity
               Define  cache  capacity  - maximum amount of lines in the cache.
               All cache lines exceeding  this  number  will  be  removed  from
               cache.  Default cache capacity is 10 lines.
 
        --clean
-
        -c     Clean  the cache. Remove all lines from the cache, so it will be
               empty.
 
        --show
-
        -s     Show the cache. List all lines of the cache, last on the top.
 
 FILES
@@ -40,15 +40,12 @@ ENVIRONMENT
 
 EXAMPLES
        Add line to cache.
-
        linecache [-f filename] [-n number] <line>
 
        Show cache.
-
        linecache [-f filename] -s
 
        Clean cache.
-
        linecache [-f filename] -c
 
        You could use these commands together. Then they will be  performed  in
@@ -56,3 +53,4 @@ EXAMPLES
 
 AUTHOR
        Written by Dmitry Antonyuk <lomeo.nuke@gmail.com>
+

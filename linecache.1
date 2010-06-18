@@ -1,6 +1,7 @@
 .TH linecache 1 "June 2010" "myenv" "My Commands"
 .SH NAME
 linecache is a simple utitlity to manage LRU cache of lines.
+
 .SH SYNOPSYS
 .B linecache
 [\fB\-f \fIcache-file-name\fR]
@@ -8,49 +9,77 @@ linecache is a simple utitlity to manage LRU cache of lines.
 [\fB\-c\fR]
 [\fB\-s\fR]
 [\fInew-line\fR]
+
 .SH DESCRIPTION
 .B linecache
 manages LRU file caches of lines. It can add new line to
 specified cache, show existent cache lines and clean some cache.
-.Sh OPTIONS
-.IP "--filename=cache-file-name"
-.IP "-f cache-file-name"
+
+.SH OPTIONS
+.TP
+.PD 0
+.BI "\-\-filename=" cache\-file\-name
+.TP
+.PD 0
+.BI "\-f " cache\-file\-name
 This is a path of the cache file. It means all operations would
 be produced in this file. Default cache file is $HOME/.linecache
-.IP "--number=cache-capacity"
-.IP "-n cache-capacity"
+
+.TP
+.PD 0
+.BI "\-\-number=" cache\-capacity
+.TP
+.PD 0
+.BI "\-n " cache\-capacity
 Define cache capacity \- maximum amount of lines in the cache.
 All cache lines exceeding this number will be removed from cache.
 Default cache capacity is 10 lines.
-.IP --clean
-.IP -c
+
+.TP
+.PD 0
+.BI "\-\-clean"
+.TP
+.PD 0
+.BI "\-c"
 Clean the cache. Remove all lines from the cache, so it will be
 empty.
-.IP --show
-.IP -s
+
+.TP
+.PD 0
+.BI "\-\-show"
+.TP
+.PD 0
+.B "\-s"
 Show the cache. List all lines of the cache, last on the top.
+
 .SH FILES
 .I ~/.linecache
 .RS
 Default cache file.
+
 .SH ENVIRONMENT
 .IP HOME
 .RS
 linecache needs $HOME variable to find default cache file.
+
 .SH EXAMPLES
 Add line to cache.
 .P
 .B linecache [-f filename] [-n number] <line>
+
 .P
 Show cache.
 .P
 .B linecache [-f filename] -s
+
 .P
 Clean cache.
 .P
 .B linecache [-f filename] -c
+
 .P
 You could use these commands together. Then they will be performed
 in the following order: clean, add, show.
+
 .SH AUTHOR
 Written by Dmitry Antonyuk <lomeo.nuke@gmail.com>
