@@ -1,0 +1,13 @@
+Name: linecache
+Version: 0.1
+Cabal-Version: >=1.2.0
+Build-Type: Simple
+Author: Dmitry Antonyuk
+
+Executable linecache
+  Main-Is: Main.hs
+  Hs-Source-Dirs: .
+  GHC-Options: -O2
+  Build-Depends:
+    base, cmdargs
+  Extensions:

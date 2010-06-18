@@ -1,0 +1,8 @@
+Usage
+=====
+
+linecache [-f filename] [-n number] <line> - add line to LRU cache
+linecache [-f filename]                    - list cached lines
+
+filename - a path of cache file. Default cache file is $HOME/.linecache
+number   - cache capacity (maximum line number)
