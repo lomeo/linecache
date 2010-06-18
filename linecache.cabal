@@ -9,5 +9,5 @@ Executable linecache
   Hs-Source-Dirs: .
   GHC-Options: -O2
   Build-Depends:
-    base, cmdargs
+    base, directory, cmdargs
   Extensions:

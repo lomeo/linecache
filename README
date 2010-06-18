@@ -9,6 +9,13 @@ linecache [-f filename] [-n number] <line>
 Show cache:
 linecache [-f filename] -s
 
+Clean cache:
+linecache -c
+
+You could use these commands together. Then they will be performed in
+the following order: clean, add, show.
+
+
 Flag values
 ===========
 
