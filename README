@@ -1,8 +1,16 @@
+linecache is a simple utitlity to manage LRU cache of lines.
+
 Usage
 =====
 
-linecache [-f filename] [-n number] <line> - add line to LRU cache
-linecache [-f filename]                    - list cached lines
+Add line to cache:
+linecache [-f filename] [-n number] <line>
+
+Show cache:
+linecache [-f filename] -s
+
+Flag values
+===========
 
 filename - a path of cache file. Default cache file is $HOME/.linecache
 number   - cache capacity (maximum line number)
