@@ -1,23 +1,58 @@
-linecache is a simple utitlity to manage LRU cache of lines.
+NAME
+       linecache is a simple utitlity to manage LRU cache of lines.
 
-Usage
-=====
+SYNOPSYS
+       linecache [-f cache-file-name] [-n cache-capacity] [-c] [-s] [new-line]
 
-Add line to cache:
-linecache [-f filename] [-n number] <line>
+DESCRIPTION
+       linecache  manages  LRU  file  caches  of lines. It can add new line to
+       specified cache, show existent cache lines and clean some cache.
 
-Show cache:
-linecache [-f filename] -s
+       --filename=cache-file-name
 
-Clean cache:
-linecache -c
+       -f cache-file-name
+              This is a path of the cache file. It means all operations  would
+              be produced in this file. Default cache file is $HOME/.linecache
 
-You could use these commands together. Then they will be performed in
-the following order: clean, add, show.
+       --number=cache-capacity
 
+       -n cache-capacity
+              Define  cache  capacity  - maximum amount of lines in the cache.
+              All cache lines exceeding  this  number  will  be  removed  from
+              cache.  Default cache capacity is 10 lines.
 
-Flag values
-===========
+       --clean
 
-filename - a path of cache file. Default cache file is $HOME/.linecache
-number   - cache capacity (maximum line number)
+       -c     Clean  the cache. Remove all lines from the cache, so it will be
+              empty.
+
+       --show
+
+       -s     Show the cache. List all lines of the cache, last on the top.
+
+FILES
+       ~/.linecache
+              Default cache file.
+
+ENVIRONMENT
+       HOME
+              linecache needs $HOME variable to find default cache file.
+
+EXAMPLES
+       Add line to cache.
+
+       linecache [-f filename] [-n number] <line>
+
+       Show cache.
+
+       linecache [-f filename] -s
+
+       Clean cache.
+
+       linecache [-f filename] -c
+
+       You could use these commands together. Then they will be  performed  in
+       the following order: clean, add, show.
+
+AUTHOR
+       Written by Dmitry Antonyuk <lomeo.nuke@gmail.com>
