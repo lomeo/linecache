@@ -6,7 +6,13 @@ import System.Console.CmdArgs
 import System.Directory (doesFileExist, removeFile)
 import System.Environment (getEnvironment)
 
-data Options = Options  { filename :: String, number :: Int, show_ :: Bool, clean :: Bool, line :: [String] }
+data Options = Options
+    { filename :: String
+    , number :: Int
+    , show_ :: Bool
+    , clean :: Bool
+    , line :: [String]
+    }
     deriving (Show, Data, Typeable)
 
 getDefaultFile = do
@@ -17,12 +23,13 @@ getDefaultFile = do
 
 getOptions = do
     defaultFile <- getDefaultFile
-    return $ mode Options
-        { filename = defaultFile &= typFile & text "Cache file path"
-        , number   = 10 &= typ "NUM" & text "Cache capacity"
-        , show_    = False &= text "Show line cache"
-        , clean    = False &= text "Clean line cache"
-        , line     = def &= args &  typ "NEW-LINE" } &= text "Line cache manager"
+    return $ Options
+        { filename = defaultFile &= typFile &= help "Cache file path"
+        , number   = 10 &= typ "NUM" &= help "Cache capacity"
+        , show_    = False &= help "Show line cache"
+        , clean    = False &= help "Clean line cache"
+        , line     = def &= args &= typ "NEW-LINE" }
+        &= summary "Line Cache Manager v 0.1, (c) Dmitry Antonyuk 2010-2011"
 
 lru :: (Eq a) => a -> [a] -> [a]
 lru x xs = x : (x `delete` xs)
@@ -36,7 +43,7 @@ void = ret ()
 
 main = do
     options <- getOptions
-    args    <- cmdArgs "linecache v 0.1, (C) Dmitry Antonyuk 2010" [options]
+    args    <- cmdArgs options
 
     let newLine = unwords (line args)
         cacheFile = filename args
