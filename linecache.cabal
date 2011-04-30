@@ -1,13 +1,28 @@
 Name: linecache
-Version: 0.1
+Version: 0.1.1
 Cabal-Version: >=1.2.0
 Build-Type: Simple
+Category: Utils, Console
+Maintainer: Dmitry Antonyuk <lomeo.nuke@gmail.com>
+Homepage: http://github.com/lomeo/linecache
+Stability: Experimental
+License: MIT
+License-File: LICENSE
 Author: Dmitry Antonyuk
+Copyright: Dmitry Antonyuk, 2010-2011
+Synopsis: LRU line cache manager
+Description:
+    linecache manages LRU file caches of lines. It can add new line to
+    specified cache, show existent cache lines and clean some cache.
 
 Executable linecache
-  Main-Is: Main.hs
-  Hs-Source-Dirs: .
-  GHC-Options: -O2
-  Build-Depends:
-    base, directory, cmdargs
-  Extensions:
+    Main-Is: Main.hs
+    Hs-Source-Dirs: .
+    GHC-Options: -O2 -Wall
+    Build-Depends:
+        base, directory, cmdargs
+    Extensions: DeriveDataTypeable, ViewPatterns
+
+Source-Repository head
+    Type:     git
+    Location: git://github.com/lomeo/unirec

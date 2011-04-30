@@ -1,5 +1,5 @@
 NAME
-       linecache is a simple utitlity to manage LRU cache of lines.
+       linecache is a simple utility to manage LRU cache of lines.
 
 
 SYNOPSYS

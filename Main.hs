@@ -1,62 +1,62 @@
-{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveDataTypeable, ViewPatterns #-}
 
 import Control.Monad (when, unless)
-import Data.List (delete, intersperse)
+import Data.List (delete)
 import System.Console.CmdArgs
 import System.Directory (doesFileExist, removeFile)
 import System.Environment (getEnvironment)
 
 data Options = Options
-    { filename :: String
-    , number :: Int
-    , show_ :: Bool
-    , clean :: Bool
-    , line :: [String]
+    { filename  :: String
+    , number    :: Int
+    , show_     :: Bool
+    , clean     :: Bool
+    , line      :: [String]
     }
     deriving (Show, Data, Typeable)
 
+getDefaultFile :: IO [Char]
 getDefaultFile = do
-    found <- fmap (lookup "HOME") getEnvironment
+    found <- lookup "HOME" `fmap` getEnvironment
     case found of
         Nothing   -> error "There is no $HOME environment variable"
         Just home -> return (home ++ "/.linecache")
 
+getOptions :: IO Options
 getOptions = do
     defaultFile <- getDefaultFile
+    let defaultCapacity = 10
     return $ Options
-        { filename = defaultFile &= typFile &= help "Cache file path"
-        , number   = 10 &= typ "NUM" &= help "Cache capacity"
+        { filename = defaultFile &= typFile &= help ("Cache file path (default=" ++ defaultFile ++ ")")
+        , number   = defaultCapacity &= typ "NUM" &= help ("Cache capacity (default=" ++ show defaultCapacity++ ")")
         , show_    = False &= help "Show line cache"
         , clean    = False &= help "Clean line cache"
         , line     = def &= args &= typ "NEW-LINE" }
-        &= summary "Line Cache Manager v 0.1, (c) Dmitry Antonyuk 2010-2011"
+        &= summary "Line Cache Manager v 0.1.1, (c) Dmitry Antonyuk 2010-2011"
+        &= program "linecache"
 
 lru :: (Eq a) => a -> [a] -> [a]
 lru x xs = x : (x `delete` xs)
 
 force :: [a] -> IO ()
-force = mapM_ void
+force = mapM_ (ret ())
 
+ret :: a -> b -> IO a
 ret = const . return
 
-void = ret ()
-
+main :: IO ()
 main = do
-    options <- getOptions
-    args    <- cmdArgs options
+    Options _file _capacity _list _delete (unwords -> _line) <- getOptions >>= cmdArgs
 
-    let newLine = unwords (line args)
-        cacheFile = filename args
+    when _delete $ do
+        exists <- doesFileExist _file
+        when exists (removeFile _file)
 
-    when (clean args) $ do
-        exists <- doesFileExist cacheFile
-        when exists (removeFile cacheFile)
-
-    cache <- fmap lines (readFile cacheFile `catch` ret "")
+    cache <- fmap lines (readFile _file `catch` ret "")
     force cache
 
-    unless (null newLine) $ do
-        let newCache = take (number args) $ lru newLine cache
-        writeFile cacheFile (unlines newCache)
+    unless (null _line) $ do
+        let newCache = take _capacity $ lru _line cache
+        writeFile _file (unlines newCache)
 
-    when (show_ args) $ putStr $ unlines cache
+    when _list $ putStr $ unlines cache
