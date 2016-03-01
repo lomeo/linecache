@@ -5,6 +5,7 @@ import Data.List (delete)
 import System.Console.CmdArgs
 import System.Directory (doesFileExist, removeFile)
 import System.Environment (getEnvironment)
+import System.IO.Error (catchIOError)
 
 data Options = Options
     { filename  :: String
@@ -52,7 +53,7 @@ main = do
         exists <- doesFileExist _file
         when exists (removeFile _file)
 
-    cache <- fmap lines (readFile _file `catch` ret "")
+    cache <- fmap lines (readFile _file `catchIOError` ret "")
     force cache
 
     unless (null _line) $ do
